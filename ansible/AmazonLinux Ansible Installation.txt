@@ -1,0 +1,31 @@
+# https://aws.amazon.com/blogs/infrastructure-and-automation/automate-ansible-playbook-deployment-amazon-ec2-github/
+
+yum update -y
+
+amazon-linux-extras install ansible2 -y
+
+
+# Ansible default location
+
+
+a. Default Ansible Inventory file, created at the time of Ansible Installation.
+
+/etc/ansible/hosts
+
+b. If Inventory file is stored in different location 
+
+ansible -i <path-to-inventory-file>
+
+
+c. Ping Ansible Managed Node  
+
+# /etc/ansible/hosts
+10.20.1.127 ansible_user=ec2-user ansible_ssh_private_key_file=/root/ansible.pem ansible_connection=ssh
+
+ansible 110.20.1.127 -m ping
+
+
+# Deploy a Ansible playbook
+
+ansible-playbook playbookname.yaml
+
