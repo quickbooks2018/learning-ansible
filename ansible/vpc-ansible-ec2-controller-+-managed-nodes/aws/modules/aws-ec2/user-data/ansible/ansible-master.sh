@@ -15,6 +15,12 @@ docker exec -it jenkins apt install -y ansible
 
 docker exec -it jenkins apt install -y git
 
+docker exec -it jenkins apt install -y maven
+
+docker exec -it jenkins which mvn
+
+docker exec -it jenkins mvn --version
+
 amazon-linux-extras install ansible2 -y
 
 
