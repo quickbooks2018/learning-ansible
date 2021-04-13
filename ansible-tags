@@ -1,0 +1,15 @@
+git clone https://github.com/quickbooks2018/learning-ansible.git
+cd learning-ansible
+cp ansible/ansible ansible.pem
+chmod 400 ansible.pem
+
+Note: update dev.inv with the private IP of Slave/Managed Node
+
+# With-Out Tags
+ansible-playbook -i dev.inv --private-key=ansible.pem apache.yml
+
+# With-Tags
+ansible-playbook -i dev.inv --private-key=ansible.pem apache-tags.yaml --tags=deploy-website
+
+# With-Multiple-Tags
+ansible-playbook -i dev.inv --private-key=ansible.pem apache-tags.yaml --tags=start-apache,deploy-website
