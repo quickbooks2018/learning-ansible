@@ -1,24 +1,18 @@
----
-- hosts: webservers 
-  become: True
-  tasks:
-    - name: Install packages
-      yum:
-        name: "httpd"
-        state: "present"
-      tags:
-        - install
-    - name: Start Apache server
-      service:
-        name: httpd
-        state: started
-        enabled: True
-      tags:
-        - start-apache    
-    - name: Deploy static website
-      copy:
-        src: index.html
-        dest: /var/www/html/
-      tags:
-        - deploy-website  
-...
+git clone https://github.com/quickbooks2018/learning-ansible.git
+cd learning-ansible
+cp ansible/ansible ansible.pem
+chmod 400 ansible.pem
+
+Note: update dev.inv with the private IP of Slave/Managed Node
+
+# With-Out Tags
+ansible-playbook -i dev.inv --private-key=ansible.pem apache.yml
+
+# With-Tags
+ansible-playbook -i dev.inv --private-key=ansible.pem apache-tags.yaml --tags=deploy-website
+
+# With-Multiple-Tags
+ansible-playbook -i dev.inv --private-key=ansible.pem apache-tags.yaml --tags=start-apache,deploy-website
+
+# With-Skip Tags
+ansible-playbook -i dev.inv --private-key=ansible.pem apache-tags.yaml --skip-tags=start-apache
