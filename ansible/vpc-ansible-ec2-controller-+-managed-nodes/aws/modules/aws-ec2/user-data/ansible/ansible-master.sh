@@ -9,6 +9,10 @@ systemctl enable docker
 
 docker run --name jenkins -u root -id -v "$PWD"/jenkins:/var/jenkins_home -p 80:8080 -p 50000:50000 --restart unless-stopped jenkins/jenkins:lts
 
+while ! nc -vz 127.0.0.1 80;do echo "Waiting for port" && sleep 5;done
+
+sleep 30
+
 docker exec -it jenkins apt update -y
 
 docker exec -it jenkins apt install -y ansible
