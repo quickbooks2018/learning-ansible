@@ -3,7 +3,7 @@
 
 yum update -y
 
-yum install -y docker
+yum install -y docker nc
 systemctl start docker
 systemctl enable docker
 
