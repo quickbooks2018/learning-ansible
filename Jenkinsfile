@@ -1,5 +1,6 @@
 pipeline{
     agent any
+ 
     stages{
         stage('SCM Checkout'){
             steps{
@@ -9,6 +10,25 @@ pipeline{
         stage('Maven Build'){
             steps{
                 sh "mvn clean package"
+            }
+        }
+        stage('Docker Build'){
+            steps{
+                sh '''
+                    echo 'Creating a docker image with GitHub Tags Option ....'
+                   
+                    # This will give the latest commit ID
+                    
+                    COMMIT_ID=`git rev-list --tags --date-order | head -n1`
+                    
+                    # Latest TAG
+                    
+                    TAG=`git show-ref --tags | grep "$COMMIT_ID" | awk -F / '{print $NF}'`
+                    echo $COMMIT_ID
+                    echo $TAG
+                    docker build -t quickbooks2018/testappformjenkins:$TAG .
+                    
+                    '''
             }
         }
     }
