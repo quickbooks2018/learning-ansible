@@ -26,7 +26,7 @@ pipeline{
                     TAG=`git show-ref --tags | grep "$COMMIT_ID" | awk -F / '{print $NF}'`
                     echo $COMMIT_ID
                     echo $TAG
-                    docker build -t quickbooks2018/testappforjenkins:$TAG .
+                    docker build -t quickbooks2018/testappformjenkins:$TAG .
                     
                     '''
             }
@@ -45,7 +45,27 @@ pipeline{
                     TAG=`git show-ref --tags | grep "$COMMIT_ID" | awk -F / '{print $NF}'`
                     echo $COMMIT_ID
                     echo $TAG
-                    docker push quickbooks2018/testappforjenkins:$TAG
+                    docker push quickbooks2018/testappformjenkins:$TAG
+                    
+                    '''
+            }
+        }
+        stage('Deploy on dev with Ansible'){
+            steps{
+                sh '''
+                    echo 'Deploy on dev with Ansible ....'
+                   
+                    # This will give the latest commit ID
+                    
+                    COMMIT_ID=`git rev-list --tags --date-order | head -n1`
+                    
+                    # Latest TAG
+                    
+                    TAG=`git show-ref --tags | grep "$COMMIT_ID" | awk -F / '{print $NF}'`
+                    echo $COMMIT_ID
+                    echo $TAG
+                    
+                    chmod 400 ansible.pem && ansible-playbook -i dev.inv --private-key=ansible.pem deploy-docker.yml
                     
                     '''
             }
