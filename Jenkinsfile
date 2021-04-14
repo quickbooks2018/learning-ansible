@@ -90,7 +90,7 @@ pipeline{
                                 image: "quickbooks2018/testappforjenkins:$TAG"
                                 state: started
                                 published_ports:
-                                  - 0.0.0.0:8080:8080
+                                  - 0.0.0.0:80:80
                               " > deploy-docker.yml
                     
                     
