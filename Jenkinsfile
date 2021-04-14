@@ -67,6 +67,36 @@ pipeline{
                     echo $COMMIT_ID
                     echo $TAG
                     
+                    echo "
+                        - hosts: dev
+                          become: True
+                          tasks:
+                            - name: Install python pip
+                              yum:
+                                name: python-pip
+                                state: present
+                            - name: Install docker
+                              yum:
+                                name: docker
+                                state: present
+                            - name: start docker
+                              service:
+                                name: docker
+                                state: started
+                                enabled: yes
+                            - name: Install docker-py python module
+                              pip:
+                                name: docker-py
+                                state: present
+                            - name: Start the container
+                              docker_container:
+                                name: testappforjenkins
+                                image: "quickbooks2018/testappforjenkins:$TAG"
+                                state: started
+                                published_ports:
+                                  - 0.0.0.0:8080:8080
+                              " > deploy-docker.yml
+                    
                     
                     
                     ansible-playbook -i dev.inv --private-key=$SERVER_CREDS deploy-docker.yml
