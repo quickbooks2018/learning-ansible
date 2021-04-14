@@ -1,6 +1,8 @@
 pipeline{
     agent any
- 
+    environment {
+    SERVER_CREDS = credentials('dev-server')
+}
     stages{
         stage('SCM Checkout'){
             steps{
@@ -65,9 +67,12 @@ pipeline{
                     echo $COMMIT_ID
                     echo $TAG
                     
-                    chmod 400 ansible.pem && ansible-playbook -i dev.inv --private-key=ansible.pem deploy-docker.yml
+                    
+                    
+                    ansible-playbook -i dev.inv --private-key=$SERVER_CREDS deploy-docker.yml
                     
                     '''
+                    
             }
         }
     }
