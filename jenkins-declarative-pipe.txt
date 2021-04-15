@@ -6,10 +6,6 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/quickbooks2018/learning-ansible.git'
             }
         }
-         stage('Execute Ansible Playbook'){
-            steps{
-                ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'apache.yml'
-            }
-        }
+         
     }
 }
