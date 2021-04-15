@@ -1,5 +1,5 @@
 ---
-- hosts: 172.31.10.44
+- hosts: 10.20.1.146
   become: True
   tasks:
     - name: Install Apache Server
@@ -16,7 +16,7 @@
          state: present
     - name: Deploy Website from Git
       git:
-        repo: https://github.com/javahometech/javahome-app
+        repo: https://github.com/quickbooks2018/learning-ansible.git
         dest: /var/www/html
     - name: Restart Apache Server
       service:
