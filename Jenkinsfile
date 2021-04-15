@@ -9,7 +9,7 @@ pipeline{
                 git branch: 'ansible-cicd', url: 'https://github.com/quickbooks2018/learning-ansible.git'
             }
         }
-
+       
         stage('Docker Build'){
             steps{
                 sh '''
@@ -24,7 +24,7 @@ pipeline{
                     TAG=`git show-ref --tags | grep "$COMMIT_ID" | awk -F / '{print $NF}'`
                     echo $COMMIT_ID
                     echo $TAG
-                    docker build -t quickbooks2018/testappformjenkins:$TAG .
+                    docker build -t quickbooks2018/nginxtestapp:$TAG .
                     
                     '''
             }
@@ -43,7 +43,7 @@ pipeline{
                     TAG=`git show-ref --tags | grep "$COMMIT_ID" | awk -F / '{print $NF}'`
                     echo $COMMIT_ID
                     echo $TAG
-                    docker push quickbooks2018/testappformjenkins:$TAG
+                    docker push quickbooks2018/nginxtestapp:$TAG
                     
                     '''
             }
@@ -86,15 +86,15 @@ pipeline{
                                 state: present
                             - name: Start the container
                               docker_container:
-                                name: testappforjenkins
-                                image: "quickbooks2018/testappforjenkins:$TAG"
+                                name: nginxtestapp
+                                image: "quickbooks2018/nginxtestapp:$TAG"
                                 state: started
                                 published_ports:
                                   - 0.0.0.0:80:80
                               " > deploy-docker.yml
                     
                     
-                    
+                    export ANSIBLE_HOST_KEY_CHECKING=False
                     ansible-playbook -i dev.inv --private-key=$SERVER_CREDS deploy-docker.yml
                     
                     '''
