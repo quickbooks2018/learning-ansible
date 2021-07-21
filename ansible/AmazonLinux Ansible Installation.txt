@@ -29,3 +29,19 @@ ansible 110.20.1.127 -m ping
 
 ansible-playbook playbookname.yaml
 
+ansible -i ansible-hosts -m ping ubuntu
+
+ansible -i ansible-hosts -m ping nogui
+
+###########################
+# Make file ansible-hosts
+###########################
+cat << EOF > ansible-hosts
+[nogui]
+ubuntu ansible_user=asim
+EOF
+###########################
+# /etcs/hosts file
+###########################
+192.168.139.128  ubuntu vmware
+
