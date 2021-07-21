@@ -53,3 +53,11 @@ EOF
 #############
 
 ansible -i ansible-hosts -m raw -a '/usr/bin/uptime' all
+
+
+######################
+# SHELL # Shell module
+######################
+
+ansible -i ansible-hosts -m shell -a 'python -V' all
+
