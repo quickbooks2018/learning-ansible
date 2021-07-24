@@ -42,6 +42,9 @@ ansible -i ansible-hosts -m ping nogui
 cat << EOF > ansible-hosts
 [nogui]
 ubuntu ansible_user=asim
+
+[ec2]
+ec2 ansible_host=3.226.250.12 ansible_private_key_file=/mnt/c/Users/Muhammad\ Asim/Desktop/ansible.pem ansible_ssh_user=ec2-user
 EOF
 ###########################
 # /etcs/hosts file
