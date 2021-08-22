@@ -30,5 +30,44 @@ ansible -i ansible-hosts -m shell -a 'python3 -V' nogui
 
 ansible -i ansible-hosts -m shell -a 'python3 -V' all 
 
+############
+# No Module
+############
+
+ansible -i ansible-hosts -a whoami nogui
+
+
+##############
+# Become root
+##############
+
+ansible -i ansible-hosts -b -a whoami nogui
+
+##################
+# command Module
+##################
+
+ansible -i ansible-hosts nogui -m command -a "shutdown -r"   # this will not work
+
+ansible -i ansible-hosts nogui -m command -b -a "shutdown -r" # to become root, this will reboot after 1 minute
+
+#######################
+# Package Installation
+#######################
+
+# Adhoc commands
+
+ansible -i ansible-hosts nogui -b -m apt -a 'name=apache2 state=present'
+
+ansible -i ansible-hosts nogui -b -m apt -a 'name=apache2 state=latest' # This will install latest version
+
+ansible -i ansible-hosts nogui -b -m shell -a 'systemctl status apache2'
+
+ansible -i ansible-hosts nogui -b -m service -a 'name=apache2 enabled=true' # This will enabled the service to startup on boot
+
+ansible -i ansible-hosts nogui -b -m service -a 'name=apache2 state=started' # This will restart the service
+
+ansible -i ansible-hosts nogui -b -m apt -a 'name=apache2 state=absent'  # This will uninstall a package
+
 
 
