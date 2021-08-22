@@ -9,7 +9,7 @@ ubuntu ansible_user=asim ansible_host=asim.com
 
 
 [lab]
-10.11.0.[6:254]
+10.11.0.[6:254]    # Ip Range can be setup
 
 
 [nogui]
