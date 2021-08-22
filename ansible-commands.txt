@@ -1,6 +1,15 @@
 nano /etc/hosts
 1.2.3.4 asim.com
 
+############
+# Inventory
+############
+[nogui]
+ubuntu ansible_user=asim ansible_host=asim.com
+
+
+[lab]
+10.11.0.[6:254]
 
 
 [nogui]
@@ -10,11 +19,15 @@ ubuntu ansible_user=asim ansible_host=asim.com
 #ec2 ansible_host=3.226.250.12 ansible_private_key_file=/mnt/c/Users/Muhammad\ Asim/Desktop/ansible.pem ansible_ssh_user=ec2-user
 
 
-ansible -i ansible-hosts -m ping nogui
+
 
 #############
 # Ping module looks for python module on the hosts machines
 #############
+
+ansible -m ping all
+
+ansible -i ansible-hosts -m ping nogui
 
 ############
 # Raw Module not looks for python on the hosts machines
