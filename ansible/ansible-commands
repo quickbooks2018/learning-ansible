@@ -1,0 +1,86 @@
+nano /etc/hosts
+1.2.3.4 asim.com
+
+############
+# Inventory
+############
+[nogui]
+ubuntu ansible_user=asim ansible_host=asim.com
+
+
+[lab]
+10.11.0.[6:254]
+
+
+[nogui]
+ubuntu ansible_user=asim ansible_host=asim.com
+
+#[ec2]
+#ec2 ansible_host=3.226.250.12 ansible_private_key_file=/mnt/c/Users/Muhammad\ Asim/Desktop/ansible.pem ansible_ssh_user=ec2-user
+
+
+
+
+#############
+# Ping module looks for python module on the hosts machines
+#############
+
+ansible -m ping all
+
+ansible -i ansible-hosts -m ping nogui
+
+############
+# Raw Module not looks for python on the hosts machines
+############
+
+ansible -i ansible-hosts -m raw -a uptime nogui
+
+###############
+# Shell Module 
+################
+
+ansible -i ansible-hosts -m shell -a 'python3 -V' nogui
+
+ansible -i ansible-hosts -m shell -a 'python3 -V' all 
+
+############
+# No Module
+############
+
+ansible -i ansible-hosts -a whoami nogui
+
+
+##############
+# Become root
+##############
+
+ansible -i ansible-hosts -b -a whoami nogui
+
+##################
+# command Module
+##################
+
+ansible -i ansible-hosts nogui -m command -a "shutdown -r"   # this will not work
+
+ansible -i ansible-hosts nogui -m command -b -a "shutdown -r" # to become root, this will reboot after 1 minute
+
+#######################
+# Package Installation
+#######################
+
+# Adhoc commands
+
+ansible -i ansible-hosts nogui -b -m apt -a 'name=apache2 state=present'
+
+ansible -i ansible-hosts nogui -b -m apt -a 'name=apache2 state=latest' # This will install latest version
+
+ansible -i ansible-hosts nogui -b -m shell -a 'systemctl status apache2'
+
+ansible -i ansible-hosts nogui -b -m service -a 'name=apache2 enabled=true' # This will enabled the service to startup on boot
+
+ansible -i ansible-hosts nogui -b -m service -a 'name=apache2 state=started' # This will restart the service
+
+ansible -i ansible-hosts nogui -b -m apt -a 'name=apache2 state=absent'  # This will uninstall a package
+
+
+
