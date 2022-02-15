@@ -110,4 +110,11 @@ ansible -i inventory members -m file -a 'path=/tmp/data state=directory'
 ansible -i inventory members -m shell -a 'ls -l /tmp'
 
 
+###########################################
+# Ansible Copy a File to a Remote Directory
+###########################################
 
+ansible -i inventory members -m copy -a 'src=/home/ubuntu/members/start_aws_hazelcast_member.sh dest=/home/ubuntu'
+ansible -i inventory members -m copy -a 'src=/home/ubuntu/members/hazelcast.yaml dest=/home/ubuntu'
+
+ansible -i inventory members -m shell -a 'ls -l /home/ubuntu'
