@@ -19,7 +19,7 @@ ubuntu ansible_user=asim ansible_host=asim.com
 ec2 ansible_host=3.226.250.12 ansible_private_key_file=/mnt/c/Users/Muhammad\ Asim/Desktop/ansible.pem ansible_ssh_user=ec2-user
 
 #[ec2]
-ec2 ansible_ssh_host=10.20.1.212 ansible_private_key_file=/root/invaluable-dev.pem ansible_ssh_user=ec2-user host_key_checking=false
+ec2 ansible_ssh_host=10.20.1.212 ansible_private_key_file=/root/invaluable-dev.pem ansible_ssh_user=ec2-user host_key_checking=False
 
 # https://docs.ansible.com/ansible/latest/user_guide/connection_details.html
 export ANSIBLE_HOST_KEY_CHECKING=False
