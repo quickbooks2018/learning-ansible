@@ -36,6 +36,8 @@ ansible -i inventory members -m ping
 
 
 
+
+
 #############
 # Ping module looks for python module on the hosts machines
 #############
@@ -57,6 +59,8 @@ ansible -i ansible-hosts -m raw -a uptime nogui
 ansible -i ansible-hosts -m shell -a 'python3 -V' nogui
 
 ansible -i ansible-hosts -m shell -a 'python3 -V' all 
+
+ansible -i inventory members -m shell -a 'ls -l /tmp'
 
 ############
 # No Module
