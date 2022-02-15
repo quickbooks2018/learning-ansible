@@ -101,5 +101,13 @@ ansible -i ansible-hosts nogui -b -m service -a 'name=apache2 state=started' # T
 
 ansible -i ansible-hosts nogui -b -m apt -a 'name=apache2 state=absent'  # This will uninstall a package
 
+#######################################################
+# Ansible create remote a directory on a remote machine
+#######################################################
+
+ansible -i inventory members -m file -a 'path=/tmp/data state=directory'
+
+ansible -i inventory members -m shell -a 'ls -l /tmp'
+
 
 
