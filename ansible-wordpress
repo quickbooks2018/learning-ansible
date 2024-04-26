@@ -1,0 +1,43 @@
+---
+- hosts: localhost
+  become: yes
+  # apt install -y pip && pip install docker-py
+  tasks:
+    - name: Create a network for the application stack
+      docker_network:
+        name: wp_network
+
+    - name: Deploy database container
+      docker_container:
+        name: db
+        image: mysql:5.7
+        state: started
+        env:
+          MYSQL_DATABASE: wordpress
+          MYSQL_USER: wordpress
+          MYSQL_PASSWORD: wordpress
+          MYSQL_ROOT_PASSWORD: rootpass
+        # docker volume create db
+        # docker volume ls
+        volumes:
+          - "db:/var/lib/mysql"
+        networks:
+          - name: wp_network
+
+    - name: Deploy WordPress container
+      docker_container:
+        name: wordpress
+        image: wordpress:latest
+        state: started
+        published_ports:
+          - "8000:80"
+        env:
+          WORDPRESS_DB_HOST: db:3306
+          WORDPRESS_DB_USER: wordpress
+          WORDPRESS_DB_PASSWORD: wordpress
+          WORDPRESS_DB_NAME: wordpress
+        networks:
+          - name: wp_network
+
+# Run the playbook
+# ansible-playbook playbook.yaml
